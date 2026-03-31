@@ -109,7 +109,7 @@ export default function ProgressTrackerPage() {
                     const pct = Math.round((done / stage.skills.length) * 100);
 
                     return (
-                        <div key={stage.id} className="card">
+                        <div key={stage._id || stage.stage || stage.title} className="card">
                             <div className="flex items-center justify-between mb-3">
                                 <h3 className="font-bold text-text-primary dark:text-gray-100 font-poppins">
                                     Stage {stage.stage}: {stage.title}

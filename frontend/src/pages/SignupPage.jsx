@@ -24,8 +24,8 @@ export default function SignupPage() {
         try {
             const result = await signup(form.name, form.email, form.password);
             if (result.success) navigate('/career');
-        } catch {
-            setError('Something went wrong. Please try again.');
+        } catch(err) {
+            setError(err.message || 'Something went wrong. Please try again.');
         } finally {
             setLoading(false);
         }
@@ -46,17 +46,17 @@ export default function SignupPage() {
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
                         <label className="label">Full name</label>
-                        <input type="text" name="name" value={form.name} onChange={handleChange} placeholder="Alex Johnson" className="input-field" autoComplete="name" />
+                        <input type="text" id="name" name="name" value={form.name} onChange={handleChange} placeholder="Alex Johnson" className="input-field" autoComplete="name" />
                     </div>
                     <div>
                         <label className="label">Email address</label>
-                        <input type="email" name="email" value={form.email} onChange={handleChange} placeholder="you@example.com" className="input-field" autoComplete="email" />
+                        <input type="email" id="email" name="email" value={form.email} onChange={handleChange} placeholder="you@example.com" className="input-field" autoComplete="email" />
                     </div>
                     <div>
                         <label className="label">Password</label>
                         <div className="relative">
                             <input
-                                type={showPw ? 'text' : 'password'} name="password" value={form.password} onChange={handleChange}
+                                type={showPw ? 'text' : 'password'} id="password" name="password" value={form.password} onChange={handleChange}
                                 placeholder="Min. 6 characters" className="input-field pr-11" autoComplete="new-password"
                             />
                             <button type="button" onClick={() => setShowPw(!showPw)} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-primary-500 transition-colors">
@@ -66,7 +66,7 @@ export default function SignupPage() {
                     </div>
                     <div>
                         <label className="label">Confirm password</label>
-                        <input type="password" name="confirmPassword" value={form.confirmPassword} onChange={handleChange} placeholder="Repeat your password" className="input-field" autoComplete="new-password" />
+                        <input type="password" id="confirmPassword" name="confirmPassword" value={form.confirmPassword} onChange={handleChange} placeholder="Repeat your password" className="input-field" autoComplete="new-password" />
                     </div>
 
                     <button type="submit" disabled={loading} className="w-full btn-primary justify-center py-3 disabled:opacity-60 disabled:cursor-not-allowed mt-2">

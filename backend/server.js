@@ -55,6 +55,7 @@ app.use('/api/v1/domains',  require('./src/routes/domainRoutes'));
 app.use('/api/v1/roadmap',  require('./src/routes/roadmapRoutes'));
 app.use('/api/v1/skills',   require('./src/routes/skillRoutes'));
 app.use('/api/v1/progress', require('./src/routes/progressRoutes'));
+app.use('/api/v1/resources', require('./src/routes/resourceRoutes'));
 
 // ─── Health Check ────────────────────────────────────────────────────────────
 app.get('/api/health', (req, res) => {

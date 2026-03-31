@@ -236,10 +236,8 @@ const generateRoadmap = async (req, res, next) => {
                             resources: curatedResources,
                         });
                     } else {
-                        // If skill exists but may lack detailed resources (from previous mock data), optionally update it:
-                        // For safety, we keep existing objects, but our curated ones have more precision.
-                        // (Uncomment updating logic below if we want to overwrite old generic resources)
-                        // await Skill.updateOne({ _id: skill._id }, { resources: curatedResources });
+                        // Update existing skill with curated resources to keep data fresh
+                        await Skill.updateOne({ _id: skill._id }, { resources: curatedResources });
                     }
                     
                     return { skillId: skill.skillId, name: skill.skillName, difficulty: skill.difficulty };
@@ -401,4 +399,4 @@ const getAllRoadmaps = async (req, res, next) => {
     }
 };
 
-module.exports = { getRoadmap, getAllRoadmaps, createCustomRoadmap, generateRoadmap };
+module.exports = { getRoadmap, getAllRoadmaps, createCustomRoadmap, generateRoadmap, CAREER_SKILL_MAP, toSlug, getFallbackResources };

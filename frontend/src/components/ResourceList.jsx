@@ -26,7 +26,7 @@ export default function ResourceList({ resources = [] }) {
 
                 return (
                     <a
-                        key={idx}
+                        key={resource.url || `resource-${idx}`}
                         href={resource.url}
                         target="_blank"
                         rel="noopener noreferrer"

@@ -50,7 +50,7 @@ export default function LoginPage() {
                     <div>
                         <label className="label">Email address</label>
                         <input
-                            type="email" name="email" value={form.email} onChange={handleChange}
+                            type="email" id="email" name="email" value={form.email} onChange={handleChange}
                             placeholder="you@example.com" className="input-field" autoComplete="email"
                         />
                     </div>
@@ -67,7 +67,7 @@ export default function LoginPage() {
                         </div>
                         <div className="relative">
                             <input
-                                type={showPw ? 'text' : 'password'} name="password" value={form.password} onChange={handleChange}
+                                type={showPw ? 'text' : 'password'} id="password" name="password" value={form.password} onChange={handleChange}
                                 placeholder="••••••••" className="input-field pr-11" autoComplete="current-password"
                             />
                             <button

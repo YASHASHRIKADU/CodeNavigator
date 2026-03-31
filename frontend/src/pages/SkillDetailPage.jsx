@@ -24,21 +24,22 @@ export default function SkillDetailPage() {
     const { skillId } = useParams();
     const { user } = useAuth();
     const { getSkillStatus, updateSkillProgress } = useUser();
-    const [skill, setSkill] = useState(null);
+    const [skillData, setSkillData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [updating, setUpdating] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
         let isMounted = true;
+        setSkillData(null);
         setLoading(true);
         
         async function fetchSkillData() {
             try {
                 // Fetch skill from backend
-                const skillData = await skillsAPI.getSkillDetail(skillId);
-                if (!skillData) {
-                    if (isMounted) { setSkill(null); setLoading(false); }
+                const responseData = await skillsAPI.getSkillDetail(skillId);
+                if (!responseData) {
+                    if (isMounted) { setSkillData(null); setLoading(false); }
                     return;
                 }
 
@@ -58,12 +59,12 @@ export default function SkillDetailPage() {
                 }
                 
                 if (isMounted) {
-                    setSkill({ ...skillData, nextSkills });
+                    setSkillData({ ...responseData, nextSkills });
                     setLoading(false);
                 }
             } catch (err) {
                 console.error('Failed to load skill', err);
-                if (isMounted) { setSkill(null); setLoading(false); }
+                if (isMounted) { setSkillData(null); setLoading(false); }
             }
         }
         
@@ -97,16 +98,15 @@ export default function SkillDetailPage() {
         );
     }
 
-    if (!skill) {
+    if (!skillData) {
         return (
             <DashboardLayout>
-                <div className="text-center py-20">
-                    <BookOpen className="w-12 h-12 mx-auto text-gray-300 mb-4" />
-                    <h2 className="font-bold text-text-primary dark:text-gray-100 mb-2">Skill Not Found</h2>
-                    <p className="text-text-secondary dark:text-gray-400 mb-4">This skill detail page is coming soon!</p>
-                    <button onClick={() => navigate(-1)} className="btn-secondary text-sm">
-                        <ArrowLeft className="w-4 h-4" /> Go Back
-                    </button>
+                <div className="max-w-4xl mx-auto py-12 px-4 text-center">
+                    <h2 className="text-2xl font-bold mb-4">Skill Not Found</h2>
+                    <p className="text-gray-400 mb-8">The skill you're looking for doesn't exist or hasn't been added yet.</p>
+                    <Link to="/dashboard" className="btn-primary inline-flex items-center gap-2">
+                        <ArrowLeft className="w-4 h-4" /> Back to Dashboard
+                    </Link>
                 </div>
             </DashboardLayout>
         );
@@ -128,12 +128,12 @@ export default function SkillDetailPage() {
                         <div className="flex items-start justify-between gap-4 mb-4">
                             <div>
                                 <div className="flex items-center gap-2 mb-2">
-                                    <span className="text-xs bg-white/20 px-3 py-0.5 rounded-full">{skill.category}</span>
+                                    <span className="text-xs bg-white/20 px-3 py-0.5 rounded-full">{skillData.category}</span>
                                     <span className={clsx('text-xs px-3 py-0.5 rounded-full bg-white/20')}>
-                                        {skill.difficulty}
+                                        {skillData.difficulty}
                                     </span>
                                 </div>
-                                <h1 className="text-2xl font-bold font-poppins">{skill.name}</h1>
+                                <h1 className="text-2xl font-bold font-poppins">{skillData.name}</h1>
                             </div>
                             <div className={clsx('badge', status === 'completed' ? 'bg-white/20 text-white' : status === 'in-progress' ? 'bg-amber-400/20 text-amber-200' : 'bg-white/10 text-white/70')}>
                                 <StatusIcon className={clsx('w-3.5 h-3.5 mr-1', cfg.color)} />
@@ -141,13 +141,13 @@ export default function SkillDetailPage() {
                             </div>
                         </div>
 
-                        <p className="text-white/80 leading-relaxed mb-4 text-sm">{skill.description}</p>
+                        <p className="text-white/80 leading-relaxed mb-4 text-sm">{skillData.description}</p>
 
                         <div className="flex gap-2">
-                            {skill.duration && <span className="text-xs bg-white/10 px-3 py-1 rounded-full">⏱ {skill.duration}</span>}
-                            {skill.prerequisites?.length > 0 && (
+                            {skillData.duration && <span className="text-xs bg-white/10 px-3 py-1 rounded-full">⏱ {skillData.duration}</span>}
+                            {skillData.prerequisites?.length > 0 && (
                                 <span className="text-xs bg-white/10 px-3 py-1 rounded-full">
-                                    Prereq: {skill.prerequisites.length}
+                                    Prereq: {skillData.prerequisites.length}
                                 </span>
                             )}
                         </div>
@@ -188,15 +188,15 @@ export default function SkillDetailPage() {
                     <h3 className="font-bold text-text-primary dark:text-gray-100 font-poppins mb-4">
                         Learning Resources
                     </h3>
-                    <ResourceList resources={skill.resources} />
+                    <ResourceList resources={skillData.resources} />
                 </div>
 
                 {/* Next skills */}
-                {skill.nextSkills?.length > 0 && (
+                {skillData.nextSkills?.length > 0 && (
                     <div className="card">
                         <h3 className="font-bold text-text-primary dark:text-gray-100 font-poppins mb-4">Next Steps</h3>
                         <div className="flex flex-wrap gap-2">
-                            {skill.nextSkills.map(id => (
+                            {skillData.nextSkills.map(id => (
                                 <Link key={id} to={`/skill/${id}`} className="flex items-center gap-1.5 badge-teal px-3 py-1.5 hover:bg-primary-100 dark:hover:bg-primary-800/40 transition-colors">
                                     {id.replace(/-/g, ' ')} <ArrowRight className="w-3 h-3" />
                                 </Link>

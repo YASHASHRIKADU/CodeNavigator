@@ -2,11 +2,11 @@ import { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import {
     LayoutDashboard, Map, BookOpen, BarChart2, User,
-    LogOut, ChevronLeft, ChevronRight, Menu, X,
+    ChevronLeft, ChevronRight, Menu, X,
     Compass, Target, TrendingUp
 } from 'lucide-react';
 import { useAuth } from '../store/AuthContext';
-import LogoutConfirmModal from './LogoutConfirmModal';
+
 import clsx from 'clsx';
 
 const navItems = [
@@ -21,7 +21,7 @@ const navItems = [
 export default function Sidebar() {
     const [collapsed, setCollapsed]         = useState(false);
     const [mobileOpen, setMobileOpen]       = useState(false);
-    const [showLogoutModal, setShowLogoutModal] = useState(false);
+
     const { user } = useAuth();
     const location = useLocation();
 
@@ -109,20 +109,7 @@ export default function Sidebar() {
                     )}
                 </Link>
 
-                {/* Logout — opens confirmation modal */}
-                <button
-                    onClick={() => { setMobileOpen(false); setShowLogoutModal(true); }}
-                    className={clsx(
-                        'w-full flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200 group text-white/60 hover:bg-red-500/20 hover:text-red-400',
-                        collapsed && !mobile ? 'justify-center px-2' : ''
-                    )}
-                    title={collapsed && !mobile ? 'Logout' : undefined}
-                >
-                    <LogOut className="flex-shrink-0 w-5 h-5 group-hover:text-red-400 transition-colors" />
-                    {(!collapsed || mobile) && (
-                        <span className="text-sm font-medium font-inter">Logout</span>
-                    )}
-                </button>
+
             </div>
         </div>
     );
@@ -165,11 +152,7 @@ export default function Sidebar() {
                 </button>
             </div>
 
-            {/* Logout confirmation modal */}
-            <LogoutConfirmModal
-                isOpen={showLogoutModal}
-                onClose={() => setShowLogoutModal(false)}
-            />
+
         </>
     );
 }

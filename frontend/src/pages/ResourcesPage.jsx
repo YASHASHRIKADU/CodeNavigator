@@ -1,68 +1,83 @@
+import { useState, useEffect } from 'react';
 import DashboardLayout from '../layouts/DashboardLayout';
 import ResourceList from '../components/ResourceList';
-import { BookOpen } from 'lucide-react';
+import { BookOpen, Loader2 } from 'lucide-react';
+import { useUser } from '../store/UserContext';
+import { useAuth } from '../store/AuthContext';
+import { resourcesAPI } from '../services/api';
 
-const resourceSections = [
-    {
-        title: 'HTML & CSS',
-        resources: [
-            { title: 'MDN Web Docs — HTML', type: 'docs', url: 'https://developer.mozilla.org/en-US/docs/Learn/HTML', free: true },
-            { title: 'CSS-Tricks', type: 'tutorial', url: 'https://css-tricks.com', free: true },
-            { title: 'Flexbox Froggy', type: 'practice', url: 'https://flexboxfroggy.com', free: true },
-        ]
-    },
-    {
-        title: 'JavaScript',
-        resources: [
-            { title: 'JavaScript.info', type: 'docs', url: 'https://javascript.info', free: true },
-            { title: 'freeCodeCamp JS Course', type: 'video', url: 'https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures/', free: true },
-            { title: 'Eloquent JavaScript', type: 'docs', url: 'https://eloquentjavascript.net', free: true },
-        ]
-    },
-    {
-        title: 'React',
-        resources: [
-            { title: 'React Official Documentation', type: 'docs', url: 'https://react.dev', free: true },
-            { title: 'Scrimba React Course', type: 'tutorial', url: 'https://scrimba.com/learn/learnreact', free: false },
-            { title: 'React Tutorial — Traversy Media', type: 'video', url: 'https://www.youtube.com/watch?v=LDB4uaJ87e0', free: true },
-        ]
-    },
-    {
-        title: 'Node.js & Backend',
-        resources: [
-            { title: 'Node.js Official Docs', type: 'docs', url: 'https://nodejs.org/docs/latest/api/', free: true },
-            { title: 'Express.js Getting Started', type: 'docs', url: 'https://expressjs.com/en/starter/installing.html', free: true },
-            { title: 'The Odin Project — NodeJS', type: 'tutorial', url: 'https://www.theodinproject.com/paths/full-stack-javascript', free: true },
-        ]
-    },
-    {
-        title: 'Python & Data Science',
-        resources: [
-            { title: 'Python.org Documentation', type: 'docs', url: 'https://docs.python.org/3/', free: true },
-            { title: 'Kaggle — Free Courses', type: 'tutorial', url: 'https://www.kaggle.com/learn', free: true },
-            { title: 'fast.ai — Practical Deep Learning', type: 'video', url: 'https://course.fast.ai', free: true },
-        ]
-    },
-];
+
 
 export default function ResourcesPage() {
+    const { user } = useAuth();
+    const { selectedCareerPath } = useUser();
+    
+    const [filteredSections, setFilteredSections] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+
+    const activeCareer = selectedCareerPath || user?.career || '';
+
+    useEffect(() => {
+        // Clear previous state before loading new data
+        setFilteredSections([]);
+
+        if (!activeCareer) {
+            return;
+        }
+
+        const fetchResources = async () => {
+            setIsLoading(true);
+            try {
+                console.log("Fetching resources for:", activeCareer);
+                const data = await resourcesAPI.getResources(activeCareer);
+                console.log("Resources loaded:", data);
+                setFilteredSections(data || []);
+            } catch (error) {
+                console.error("Failed to load resources:", error);
+                setFilteredSections([]);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        fetchResources();
+    }, [activeCareer]);
+
     return (
         <DashboardLayout>
             <div className="max-w-4xl mx-auto space-y-6">
                 <div>
                     <h1 className="text-2xl font-bold font-poppins text-text-primary dark:text-gray-100">Learning Resources</h1>
-                    <p className="text-text-secondary dark:text-gray-400 text-sm mt-1">Curated free and premium resources for every skill area.</p>
+                    <p className="text-text-secondary dark:text-gray-400 text-sm mt-1">Curated free and premium resources for your selected career path.</p>
                 </div>
 
-                {resourceSections.map(section => (
-                    <div key={section.title} className="card">
-                        <div className="flex items-center gap-2 mb-4">
-                            <BookOpen className="w-5 h-5 text-primary-500" />
-                            <h3 className="font-bold text-text-primary dark:text-gray-100 font-poppins">{section.title}</h3>
-                        </div>
-                        <ResourceList resources={section.resources} />
+                {!activeCareer ? (
+                    <div className="card text-center py-12">
+                        <BookOpen className="w-12 h-12 mx-auto text-gray-500 mb-4 opacity-50" />
+                        <h3 className="text-lg font-bold text-gray-300">No Career Selected</h3>
+                        <p className="text-gray-500 mt-2">Please select a career path to view tailored resources.</p>
                     </div>
-                ))}
+                ) : isLoading ? (
+                    <div className="flex items-center justify-center py-12">
+                        <Loader2 className="w-10 h-10 text-primary-500 animate-spin" />
+                    </div>
+                ) : filteredSections.length === 0 ? (
+                    <div className="card text-center py-12">
+                        <BookOpen className="w-12 h-12 mx-auto text-gray-500 mb-4 opacity-50" />
+                        <h3 className="text-lg font-bold text-gray-300">No resources available for this career path</h3>
+                        <p className="text-gray-500 mt-2">Check back later as we continuously add more learning materials.</p>
+                    </div>
+                ) : (
+                    filteredSections.map(section => (
+                        <div key={section.category} className="card">
+                            <div className="flex items-center gap-2 mb-4">
+                                <BookOpen className="w-5 h-5 text-primary-500" />
+                                <h3 className="font-bold text-text-primary dark:text-gray-100 font-poppins">{section.category}</h3>
+                            </div>
+                            <ResourceList resources={section.items} />
+                        </div>
+                    ))
+                )}
             </div>
         </DashboardLayout>
     );

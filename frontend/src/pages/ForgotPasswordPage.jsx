@@ -72,6 +72,7 @@ function OtpInput({ value, onChange, disabled }) {
                     type="text"
                     inputMode="numeric"
                     maxLength={1}
+                    name={`otp-${idx}`}
                     value={digits[idx] || ''}
                     disabled={disabled}
                     onChange={e => handleChange(e, idx)}
@@ -208,7 +209,7 @@ export default function ForgotPasswordPage() {
                             <label className="label">Email address</label>
                             <div className="relative">
                                 <input
-                                    type="email" value={email}
+                                    type="email" id="forgot-email" name="email" value={email}
                                     onChange={e => setEmail(e.target.value)}
                                     placeholder="you@example.com"
                                     className="input-field pl-10"

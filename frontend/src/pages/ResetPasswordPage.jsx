@@ -80,7 +80,7 @@ export default function ResetPasswordPage() {
                             <div>
                                 <label className="label">Email address</label>
                                 <input
-                                    type="email" value={email}
+                                    type="email" id="reset-email" name="email" value={email}
                                     onChange={e => setEmail(e.target.value)}
                                     placeholder="you@example.com"
                                     className="input-field"
@@ -93,7 +93,7 @@ export default function ResetPasswordPage() {
                             <div>
                                 <label className="label">OTP</label>
                                 <input
-                                    type="text" value={otp}
+                                    type="text" id="reset-otp" name="otp" value={otp}
                                     onChange={e => setOtp(e.target.value.replace(/\D/g, '').slice(0, 6))}
                                     placeholder="6-digit OTP"
                                     className="input-field font-mono tracking-widest text-center"
@@ -109,6 +109,7 @@ export default function ResetPasswordPage() {
                             <div className="relative">
                                 <input
                                     type={showPw ? 'text' : 'password'}
+                                    id="new-password" name="newPassword"
                                     value={password}
                                     onChange={e => setPassword(e.target.value)}
                                     placeholder="Min. 6 characters"
@@ -130,6 +131,7 @@ export default function ResetPasswordPage() {
                             <label className="label">Confirm New Password</label>
                             <input
                                 type={showPw ? 'text' : 'password'}
+                                id="confirm-password" name="confirmPassword"
                                 value={confirm}
                                 onChange={e => setConfirm(e.target.value)}
                                 placeholder="Re-enter password"

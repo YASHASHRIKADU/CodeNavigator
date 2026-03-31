@@ -254,6 +254,7 @@ export const skillsAPI = {
 
     async getSkillDetail(skillId) {
         try {
+            console.log("Calling API:", `/api/v1/skills/${skillId}`);
             const data = await request(`/skills/${skillId}`);
             return data.data;
         } catch (err) {
@@ -307,5 +308,13 @@ export const progressAPI = {
             body: JSON.stringify({ progress: progressMap, roadmapId }),
         });
         return { success: true };
+    },
+};
+
+// ─── Resources APIs ───────────────────────────────────────────────────────────
+export const resourcesAPI = {
+    async getResources(career) {
+        const data = await request(`/resources/${encodeURIComponent(career)}`);
+        return data.data;
     },
 };
