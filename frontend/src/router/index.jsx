@@ -17,6 +17,7 @@ import SkillDetailPage from '../pages/SkillDetailPage';
 import ProgressTrackerPage from '../pages/ProgressTrackerPage';
 import ProfilePage from '../pages/ProfilePage';
 import ResourcesPage from '../pages/ResourcesPage';
+import SettingsPage from '../pages/SettingsPage';
 
 import CustomCareerBuilder from '../pages/CustomCareerBuilder';
 
@@ -52,6 +53,7 @@ export default function AppRouter() {
                             <Route path="/progress" element={<ProgressTrackerPage />} />
                             <Route path="/profile" element={<ProfilePage />} />
                             <Route path="/resources" element={<ResourcesPage />} />
+                            <Route path="/settings" element={<SettingsPage />} />
                         </Route>
 
                         {/* Fallback */}

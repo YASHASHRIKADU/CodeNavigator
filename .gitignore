@@ -24,3 +24,7 @@ Thumbs.db
 # Temporary files
 *.tmp
 *.temp
+
+# Debug / CI output files
+lint_output.txt
+git_status_output.txt

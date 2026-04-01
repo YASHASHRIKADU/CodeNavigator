@@ -139,6 +139,13 @@ export const authAPI = {
             body: JSON.stringify({ email, otp, newPassword }),
         });
     },
+
+    async changePassword(currentPassword, newPassword) {
+        return await request('/auth/change-password', {
+            method: 'PUT',
+            body: JSON.stringify({ currentPassword, newPassword }),
+        });
+    },
 };
 
 // ─── Career APIs ─────────────────────────────────────────────────────────────
@@ -309,12 +316,24 @@ export const progressAPI = {
         });
         return { success: true };
     },
+
+    async resetProgress(roadmapId = '') {
+        const qs = roadmapId ? `?roadmapId=${encodeURIComponent(roadmapId)}` : '';
+        return await request(`/progress${qs}`, { method: 'DELETE' });
+    },
 };
 
 // ─── Resources APIs ───────────────────────────────────────────────────────────
 export const resourcesAPI = {
     async getResources(career) {
-        const data = await request(`/resources/${encodeURIComponent(career)}`);
-        return data.data;
+        try {
+            const data = await request(`/resources/${encodeURIComponent(career)}`);
+            // Always return an array — never throw for missing resources
+            return Array.isArray(data.data) ? data.data : [];
+        } catch (err) {
+            // Backend no longer returns 404 for missing resources, but guard anyway
+            if (err.status === 404) return [];
+            throw err;
+        }
     },
 };

@@ -1,6 +1,6 @@
 const express  = require('express');
 const router   = express.Router();
-const { signup, login, getProfile, updateProfile, sendOtp, verifyOtp, resetPassword } = require('../controllers/authController');
+const { signup, login, getProfile, updateProfile, changePassword, sendOtp, verifyOtp, resetPassword } = require('../controllers/authController');
 const { protect } = require('../middleware/auth');
 const { signupRules, loginRules, sendOtpRules, verifyOtpRules, resetPasswordRules, handleValidationErrors } = require('../middleware/validate');
 
@@ -15,6 +15,9 @@ router.get('/profile', protect, getProfile);
 
 // PUT  /api/v1/auth/profile
 router.put('/profile', protect, updateProfile);
+
+// PUT  /api/v1/auth/change-password
+router.put('/change-password', protect, changePassword);
 
 // POST /api/v1/auth/send-otp  — Step 1: email OTP to user
 router.post('/send-otp', sendOtpRules, handleValidationErrors, sendOtp);

@@ -90,4 +90,19 @@ const getUserProgress = async (req, res, next) => {
     }
 };
 
-module.exports = { updateProgress, bulkUpdateProgress, getMyProgress, getUserProgress };
+// DELETE /api/v1/progress  [protected]
+// Deletes all progress for the logged-in user (optionally scoped to ?roadmapId=)
+const resetProgress = async (req, res, next) => {
+    try {
+        const filter = { userId: req.user._id };
+        if (req.query.roadmapId) {
+            filter.roadmapId = req.query.roadmapId.toLowerCase();
+        }
+        const result = await Progress.deleteMany(filter);
+        res.status(200).json({ success: true, message: `Deleted ${result.deletedCount} progress records.` });
+    } catch (error) {
+        next(error);
+    }
+};
+
+module.exports = { updateProgress, bulkUpdateProgress, getMyProgress, getUserProgress, resetProgress };

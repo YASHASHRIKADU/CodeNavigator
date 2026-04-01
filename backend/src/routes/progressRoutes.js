@@ -7,6 +7,7 @@ const {
     bulkUpdateProgress,
     getMyProgress,
     getUserProgress,
+    resetProgress,
 } = require('../controllers/progressController');
 
 // All progress routes require authentication
@@ -20,6 +21,9 @@ router.post('/', progressRules, handleValidationErrors, updateProgress);
 
 // POST /api/v1/progress/bulk     — bulk upsert
 router.post('/bulk', bulkUpdateProgress);
+
+// DELETE /api/v1/progress     — reset all progress (or scoped by ?roadmapId=)
+router.delete('/', resetProgress);
 
 // GET  /api/v1/progress/:userId  — get specific user's progress
 router.get('/:userId', getUserProgress);
