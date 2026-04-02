@@ -5,7 +5,7 @@ import { useAuth } from '../store/AuthContext';
 import { useUser } from '../store/UserContext';
 import { authAPI, progressAPI } from '../services/api';
 import {
-    User, Mail, Briefcase, Shield, Bell, Moon, Sun,
+    User, Mail, Briefcase, Shield, Bell,
     RotateCcw, Eye, EyeOff, Check, AlertTriangle, Loader2,
     ChevronRight, Settings, LogOut
 } from 'lucide-react';
@@ -108,21 +108,6 @@ export default function SettingsPage() {
         }
     };
 
-    // ── C. Theme Settings ─────────────────────────────────────────────────────
-    const [darkMode, setDarkMode] = useState(() => {
-        return localStorage.getItem('cn_theme') === 'dark' ||
-            (!localStorage.getItem('cn_theme') && window.matchMedia('(prefers-color-scheme: dark)').matches);
-    });
-
-    useEffect(() => {
-        if (darkMode) {
-            document.documentElement.classList.add('dark');
-            localStorage.setItem('cn_theme', 'dark');
-        } else {
-            document.documentElement.classList.remove('dark');
-            localStorage.setItem('cn_theme', 'light');
-        }
-    }, [darkMode]);
 
     // ── D. Notification Settings ──────────────────────────────────────────────
     const [notifEnabled, setNotifEnabled] = useState(() =>
@@ -302,47 +287,6 @@ export default function SettingsPage() {
                     </div>
                 </SettingsSection>
 
-                {/* ── C. Theme Settings ───────────────────────────────────── */}
-                <SettingsSection icon={darkMode ? Moon : Sun} title="Appearance">
-                    <div className="flex items-center gap-3 mb-4">
-                        {/* Light option */}
-                        <button
-                            id="settings-theme-light"
-                            onClick={() => setDarkMode(false)}
-                            className={`flex-1 flex flex-col items-center gap-2 p-4 rounded-xl border-2 transition-all ${
-                                !darkMode
-                                    ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/20'
-                                    : 'border-gray-200 dark:border-gray-600 hover:border-gray-300'
-                            }`}
-                        >
-                            <Sun className={`w-5 h-5 ${!darkMode ? 'text-primary-500' : 'text-gray-400'}`} />
-                            <span className={`text-xs font-semibold ${!darkMode ? 'text-primary-500' : 'text-text-secondary dark:text-gray-400'}`}>
-                                Light
-                            </span>
-                            {!darkMode && <Check className="w-3.5 h-3.5 text-primary-500" />}
-                        </button>
-
-                        {/* Dark option */}
-                        <button
-                            id="settings-theme-dark"
-                            onClick={() => setDarkMode(true)}
-                            className={`flex-1 flex flex-col items-center gap-2 p-4 rounded-xl border-2 transition-all ${
-                                darkMode
-                                    ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/20'
-                                    : 'border-gray-200 dark:border-gray-600 hover:border-gray-300'
-                            }`}
-                        >
-                            <Moon className={`w-5 h-5 ${darkMode ? 'text-primary-500' : 'text-gray-400'}`} />
-                            <span className={`text-xs font-semibold ${darkMode ? 'text-primary-500' : 'text-text-secondary dark:text-gray-400'}`}>
-                                Dark
-                            </span>
-                            {darkMode && <Check className="w-3.5 h-3.5 text-primary-500" />}
-                        </button>
-                    </div>
-                    <p className="text-xs text-text-secondary dark:text-gray-400">
-                        Your theme preference is saved locally and applied on every visit.
-                    </p>
-                </SettingsSection>
 
                 {/* ── D. Notification Settings ────────────────────────────── */}
                 <SettingsSection icon={Bell} title="Notifications">
