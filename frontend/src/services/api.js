@@ -84,7 +84,7 @@ export const authAPI = {
     return await request('/auth/profile');
   },
 
-  // ✅ FIXED (this was missing → caused crash)
+  // ✅ REQUIRED
   getStoredUser() {
     const token =
       localStorage.getItem('cn_token') ||
@@ -176,6 +176,22 @@ export const skillsAPI = {
   async getAllSkills() {
     const data = await request('/skills');
     return data.data;
+  },
+
+  // ✅ FIXED (this was missing → caused crash)
+  async getAssessmentSkills(careerId) {
+    const data = await request(`/roadmap/${careerId}`);
+    const roadmap = data.data;
+
+    const grouped = {};
+    roadmap.stages.forEach(stage => {
+      grouped[stage.title] = stage.skills.map(s => ({
+        id: s.skillId,
+        name: s.name,
+      }));
+    });
+
+    return grouped;
   },
 
   async getSkillDetail(skillId) {
