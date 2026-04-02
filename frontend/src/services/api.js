@@ -83,6 +83,27 @@ export const authAPI = {
   async getProfile() {
     return await request('/auth/profile');
   },
+
+  // ✅ FIXED (this was missing → caused crash)
+  getStoredUser() {
+    const token =
+      localStorage.getItem('cn_token') ||
+      sessionStorage.getItem('cn_token');
+
+    const stored =
+      localStorage.getItem('cn_user') ||
+      sessionStorage.getItem('cn_user');
+
+    if (token && stored) {
+      try {
+        return JSON.parse(stored);
+      } catch {
+        return null;
+      }
+    }
+
+    return null;
+  },
 };
 
 // ─── Career APIs ────────────────────────────────────────────────────────────
@@ -98,11 +119,16 @@ export const careerAPI = {
       body: JSON.stringify({ careerGoal: careerId }),
     });
 
-    const stored = localStorage.getItem('cn_user') || sessionStorage.getItem('cn_user');
+    const stored =
+      localStorage.getItem('cn_user') ||
+      sessionStorage.getItem('cn_user');
+
     if (stored) {
       const user = JSON.parse(stored);
       user.career = careerId;
-      const storage = localStorage.getItem('cn_token') ? localStorage : sessionStorage;
+      const storage = localStorage.getItem('cn_token')
+        ? localStorage
+        : sessionStorage;
       storage.setItem('cn_user', JSON.stringify(user));
     }
 
@@ -118,7 +144,9 @@ export const domainAPI = {
   },
 
   async getCareerPaths(domain) {
-    const data = await request(`/domains/${encodeURIComponent(domain)}/career-paths`);
+    const data = await request(
+      `/domains/${encodeURIComponent(domain)}/career-paths`
+    );
     return data.data;
   },
 };
@@ -164,7 +192,9 @@ export const skillsAPI = {
 // ─── Progress APIs ──────────────────────────────────────────────────────────
 export const progressAPI = {
   async getProgress(roadmapId = '') {
-    const qs = roadmapId ? `?roadmapId=${encodeURIComponent(roadmapId)}` : '';
+    const qs = roadmapId
+      ? `?roadmapId=${encodeURIComponent(roadmapId)}`
+      : '';
     const data = await request(`/progress${qs}`);
     return data.data;
   },
@@ -174,12 +204,13 @@ export const progressAPI = {
       method: 'POST',
       body: JSON.stringify({ skillId, status, roadmapId }),
     });
-
     return data.data;
   },
 
   async resetProgress(roadmapId = '') {
-    const qs = roadmapId ? `?roadmapId=${encodeURIComponent(roadmapId)}` : '';
+    const qs = roadmapId
+      ? `?roadmapId=${encodeURIComponent(roadmapId)}`
+      : '';
     return await request(`/progress${qs}`, { method: 'DELETE' });
   },
 };
@@ -188,7 +219,9 @@ export const progressAPI = {
 export const resourcesAPI = {
   async getResources(career) {
     try {
-      const data = await request(`/resources/${encodeURIComponent(career)}`);
+      const data = await request(
+        `/resources/${encodeURIComponent(career)}`
+      );
       return Array.isArray(data.data) ? data.data : [];
     } catch (err) {
       if (err.status === 404) return [];
