@@ -51,11 +51,11 @@
   }
 
   .btn-ghost {
-    @apply text-primary-500 font-medium px-4 py-2 rounded-xl hover:bg-primary-50 dark:hover:bg-primary-900/30 transition-all duration-200;
+    @apply text-primary-500 font-medium px-4 py-2 rounded-xl hover:bg-primary-50 transition-all duration-200;
   }
 
   .card {
-    @apply bg-white dark:bg-card-dark rounded-2xl shadow-card p-6 transition-all duration-200;
+    @apply bg-white rounded-2xl shadow-card p-6 transition-all duration-200;
   }
 
   .card-hover {
@@ -63,11 +63,11 @@
   }
 
   .input-field {
-    @apply w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-600 bg-white dark:bg-card-dark text-text-primary dark:text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 font-inter;
+    @apply w-full px-4 py-3 rounded-xl border border-gray-200 bg-white text-text-primary placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 font-inter;
   }
 
   .label {
-    @apply block text-sm font-medium text-text-primary dark:text-gray-200 mb-1.5 font-inter;
+    @apply block text-sm font-medium text-text-primary mb-1.5 font-inter;
   }
 
   .badge {
@@ -75,23 +75,23 @@
   }
 
   .badge-success {
-    @apply badge bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-400;
+    @apply badge bg-green-100 text-green-700;
   }
 
   .badge-warning {
-    @apply badge bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-400;
+    @apply badge bg-amber-100 text-amber-700;
   }
 
   .badge-gray {
-    @apply badge bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-400;
+    @apply badge bg-gray-100 text-gray-600;
   }
 
   .badge-teal {
-    @apply badge bg-primary-50 text-primary-500 dark:bg-primary-900/40 dark:text-primary-300;
+    @apply badge bg-primary-50 text-primary-500;
   }
 
   .section-title {
-    @apply text-3xl font-bold font-poppins text-text-primary dark:text-gray-100;
+    @apply text-3xl font-bold font-poppins text-text-primary;
   }
 
   .animate-fade-in {
