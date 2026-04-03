@@ -30,12 +30,12 @@ export function UserProvider({ children}) {
  useEffect(() => {
  if (user?.id) {
  // Load progress scoped to the user's selected career path
- progressAPI.getProgress(user.id, user.career || '').then(setProgress);
+ progressAPI.getProgress(user.career || '').then(setProgress);
 }
 }, [user?.id, user?.career]);
 
  const selectCareer = async (careerId) => {
- const result = await careerAPI.selectCareer(user.id, careerId);
+ const result = await careerAPI.selectCareer(careerId);
  if (result.success) {
  updateUser({ career: careerId});
  setSelectedCareerPath('');
@@ -47,7 +47,7 @@ export function UserProvider({ children}) {
 };
 
  const saveKnownSkills = async (skillIds) => {
- const result = await skillsAPI.saveKnownSkills(user.id, skillIds, user.career || '');
+ const result = await skillsAPI.saveKnownSkills(skillIds, user.career || '');
  if (result.success) {
  // Pre-mark known skills as completed in the flat progress map
  const updatedProgress = { ...progress};
@@ -66,7 +66,7 @@ export function UserProvider({ children}) {
  setProgress(prev => ({ ...prev, [skillId]: status}));
  try {
  // Pass the user's career as roadmapId to scope this update
- const result = await progressAPI.updateProgress(user?.id, skillId, status, user?.career || '');
+ const result = await progressAPI.updateProgress(skillId, status, user?.career || '');
  return result;
 } catch (err) {
  // Rollback this skill's status on API failure
