@@ -66,9 +66,15 @@ export const authAPI = {
             localStorage.setItem('cn_user', userPayload);
             sessionStorage.clear();
         } else {
+            // Preserve selectedCareerPath before wiping localStorage
+            const savedCareerPath = localStorage.getItem('selectedCareerPath');
             sessionStorage.setItem('cn_token', data.token);
             sessionStorage.setItem('cn_user', userPayload);
             localStorage.clear();
+            // Restore it so the UI shows the correct career without needing a refresh
+            if (savedCareerPath) {
+                localStorage.setItem('selectedCareerPath', savedCareerPath);
+            }
         }
 
         return { success: true, user: data.user };
