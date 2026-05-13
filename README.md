@@ -50,12 +50,7 @@
     cd backend
     npm install
     ```
-    - Create a `.env` file in the `backend` directory and add the following environment variables:
-      ```
-      MONGO_URI=<Your_MongoDB_Connection_String>
-      JWT_SECRET=<Your_JWT_Secret>
-      PORT=5000
-      ```
+    
     - Start the backend server:
       ```bash
       npm run dev
