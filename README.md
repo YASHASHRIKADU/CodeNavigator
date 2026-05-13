@@ -1,20 +1,20 @@
 
-# CodeNavigator - Smart Learning Path Generator
+# 🧭 CodeNavigator - Smart Learning Path Generator
 
 **CodeNavigator** is a full-stack web application designed to help students and aspiring developers generate personalized learning roadmaps for various tech careers. It addresses the common problem of navigating the vast world of online learning resources by providing a structured, goal-oriented path.
 
 ## ✨ Features
 
--   **Personalized Roadmap Generation**: Select a career path (e.g., Frontend, Backend, Full Stack) and get a curated learning roadmap.
--   **Skill Gap Analysis**: Assess your current skills to identify what you need to learn next.
--   **Progress Tracking**: Mark skills as "in-progress" or "completed" and visualize your journey.
--   **Curated Resources**: Each skill in the roadmap comes with a list of high-quality learning resources (articles, videos, tutorials).
--   **User Authentication**: Secure sign-up and login functionality to save your progress.
--   **Responsive Design**: A modern, clean, and mobile-friendly user interface built with Tailwind CSS.
+-   🗺️ **Personalized Roadmap Generation**: Select a career path (e.g., Frontend, Backend, Full Stack) and get a curated learning roadmap.
+-   🔍 **Skill Gap Analysis**: Assess your current skills to identify what you need to learn next.
+-   📊 **Progress Tracking**: Mark skills as "in-progress" or "completed" and visualize your journey.
+-   📚 **Curated Resources**: Each skill in the roadmap comes with a list of high-quality learning resources (articles, videos, tutorials).
+-   🔐 **User Authentication**: Secure sign-up and login functionality to save your progress.
+-   📱 **Responsive Design**: A modern, clean, and mobile-friendly user interface built with Tailwind CSS.
 
 ## 🛠️ Tech Stack
 
-### Frontend
+### 💻 Frontend
 
 -   **Framework**: React
 -   **Styling**: Tailwind CSS
@@ -22,7 +22,7 @@
 -   **State Management**: React Context API
 -   **Build Tool**: Vite
 
-### Backend
+### ⚙️ Backend
 
 -   **Framework**: Node.js with Express
 -   **Database**: MongoDB with Mongoose
@@ -75,7 +75,7 @@
 4.  **Open the application:**
     - The application should now be running at `http://localhost:5173`.
 
-## API Endpoints
+## 📡 API Endpoints
 
 The backend provides the following RESTful API endpoints under the `/api/v1` prefix:
 
