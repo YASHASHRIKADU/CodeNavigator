@@ -1,134 +1,111 @@
-# CodeNavigator
 
-## Smart Learning Path Generator
+# CodeNavigator - Smart Learning Path Generator
 
-CodeNavigator is a full-stack web application that helps users choose a tech career path and follow a structured learning roadmap with personalized skills, resources, and progress tracking.
+**CodeNavigator** is a full-stack web application designed to help students and aspiring developers generate personalized learning roadmaps for various tech careers. It addresses the common problem of navigating the vast world of online learning resources by providing a structured, goal-oriented path.
 
-The platform dynamically generates career-based roadmaps and displays relevant learning resources based on the selected domain and career path.
+## ✨ Features
 
----
+-   **Personalized Roadmap Generation**: Select a career path (e.g., Frontend, Backend, Full Stack) and get a curated learning roadmap.
+-   **Skill Gap Analysis**: Assess your current skills to identify what you need to learn next.
+-   **Progress Tracking**: Mark skills as "in-progress" or "completed" and visualize your journey.
+-   **Curated Resources**: Each skill in the roadmap comes with a list of high-quality learning resources (articles, videos, tutorials).
+-   **User Authentication**: Secure sign-up and login functionality to save your progress.
+-   **Responsive Design**: A modern, clean, and mobile-friendly user interface built with Tailwind CSS.
 
-# 🚀 Features
+## 🛠️ Tech Stack
 
-- Dynamic career-based roadmap generation
-- Skill-wise progress tracking
-- Backend-driven resource management
-- Personalized dashboard
-- Custom career path builder
-- Search and filter functionality
-- Responsive UI with dark/light theme
-- OTP-based forgot password system
-- Real-time dynamic updates without page reload
+### Frontend
 
----
+-   **Framework**: React
+-   **Styling**: Tailwind CSS
+-   **Routing**: React Router
+-   **State Management**: React Context API
+-   **Build Tool**: Vite
 
-# 🛠 Tech Stack
+### Backend
 
-## Frontend
-- React.js
-- JavaScript
-- HTML5
-- CSS3 / Tailwind CSS
-- React Router
+-   **Framework**: Node.js with Express
+-   **Database**: MongoDB with Mongoose
+-   **Authentication**: JSON Web Tokens (JWT)
+-   **Middleware**: Helmet, CORS, Express Rate Limit, Morgan
 
-## Backend
-- Node.js
-- Express.js
+## 🚀 Getting Started
 
-## Database
-- MongoDB
+### Prerequisites
 
-## APIs & Tools
-- REST APIs
-- Nodemailer
-- JWT Authentication
+-   Node.js (v18.0.0 or higher)
+-   npm (or yarn)
+-   MongoDB (local or a cloud instance like MongoDB Atlas)
 
----
+### Installation & Setup
 
-# 📌 Problem Statement
+1.  **Clone the repository:**
+    ```bash
+    git clone https://github.com/YASHASHRIKADU/CodeNavigator.git
+    cd CodeNavigator
+    ```
 
-Many students and beginners face difficulty deciding:
+2.  **Setup Backend:**
+    ```bash
+    cd backend
+    npm install
+    ```
+    - Create a `.env` file in the `backend` directory and add the following environment variables:
+      ```
+      MONGO_URI=<Your_MongoDB_Connection_String>
+      JWT_SECRET=<Your_JWT_Secret>
+      PORT=5000
+      ```
+    - Start the backend server:
+      ```bash
+      npm run dev
+      ```
 
-- What to learn
-- In what order to learn
-- Which resources are best for a specific tech career
+3.  **Setup Frontend:**
+    ```bash
+    cd ../frontend
+    npm install
+    ```
+    - The frontend will connect to the backend API running on `http://localhost:5000`.
+    - Start the frontend development server:
+      ```bash
+      npm run dev
+      ```
 
-Most platforms only provide scattered resources without a proper structured learning path.
+4.  **Open the application:**
+    - The application should now be running at `http://localhost:5173`.
 
-CodeNavigator solves this by providing structured career roadmaps with skills, resources, and progress tracking.
+## API Endpoints
 
----
+The backend provides the following RESTful API endpoints under the `/api/v1` prefix:
 
-# 💡 How It Works
+-   `POST /auth/signup`: Register a new user.
+-   `POST /auth/login`: Log in a user.
+-   `GET /auth/profile`: Get the current user's profile.
+-   `GET /careers`: Get a list of available career paths.
+-   `GET /roadmap/:career`: Get the roadmap for a specific career.
+-   `GET /skills`: Get a list of all skills.
+-   `POST /progress`: Update the user's progress on a skill.
+-   `GET /progress/:userId`: Get the progress for a specific user.
+-   `GET /resources`: Get all learning resources.
 
-1. User logs in to the platform.
-2. User selects a domain and career path.
-3. Backend dynamically fetches roadmap data.
-4. Skills are displayed stage-by-stage.
-5. User can view resources for each skill.
-6. User updates progress status.
-7. Dashboard updates progress dynamically.
+## ☁️ Deployment
 
----
+The frontend is deployed on **Vercel** and the backend is deployed on **Render**.
 
-# 🎯 Career Domains Supported
+-   **Frontend (Vercel)**: `https://code-navigator-blond.vercel.app/`
+-   **Backend (Render)**: The API is live and connected to the deployed frontend.
 
-- Web Development
-- AI
-- Cloud Computing
-- Cybersecurity
-- Data Science
-- DevOps
-- Mobile App Development
-- Game Development
+## 🤝 Contributing
 
----
+Contributions are welcome! If you have suggestions for improvements or new features, feel free to open an issue or submit a pull request.
 
-# 📚 Key Features Explained
+1.  Fork the Project
+2.  Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3.  Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4.  Push to the Branch (`git push origin feature/AmazingFeature`)
+5.  Open a Pull Request
 
-## 1. Dynamic Career Roadmaps
-Roadmaps are generated dynamically based on the selected career path.
+## 📄 License
 
-## 2. Skill-Based Resource System
-Each skill contains separate learning resources such as:
-- Documentation
-- Tutorials
-- Videos
-- Practice websites
-
-## 3. Progress Tracking
-Users can mark skills as:
-- Not Started
-- In Progress
-- Completed
-
-## 4. Custom Career Builder
-Users can create their own custom learning path.
-
-## 5. OTP-Based Password Reset
-Secure forgot password system using email OTP verification.
-
----
-
-# 📂 Project Structure
-
-```bash
-CodeNavigator/
-│
-├── frontend/
-│   ├── src/
-│   ├── components/
-│   ├── pages/
-│   ├── layouts/
-│   ├── store/
-│   └── services/
-│
-├── backend/
-│   ├── routes/
-│   ├── controllers/
-│   ├── models/
-│   ├── middleware/
-│   ├── config/
-│   └── utils/
-│
-└── README.md
+This project is licensed under the MIT License. See the `LICENSE` file for details.
